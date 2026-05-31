@@ -1,8 +1,6 @@
 (function () {
   "use strict";
 
-  // Animations are intentionally forced on regardless of the OS / browser
-  // "reduce motion" setting, per project requirement.
   const prefersReduced = false;
   const hasGsap = typeof window.gsap !== "undefined";
   const hasScrollTrigger = typeof window.ScrollTrigger !== "undefined";
@@ -57,7 +55,6 @@
       slides[0].classList.add("is-active");
     }
 
-    // Initialise GSAP state on all slides so they're off-screen by default
     if (typeof window.gsap !== "undefined") {
       slides.forEach((s, i) => {
         if (i !== index) {
@@ -84,19 +81,11 @@
 
       if (typeof window.gsap !== "undefined") {
         isAnimating = true;
-
         const gsap = window.gsap;
         const dur  = 0.55;
 
-        // Place incoming slide off-screen in the direction of travel
         gsap.set(slides[inIndex], { xPercent: dir * 100, autoAlpha: 1 });
-
-        gsap.to(slides[outIndex], {
-          xPercent: dir * -100,
-          duration: dur,
-          ease: "power2.inOut",
-        });
-
+        gsap.to(slides[outIndex], { xPercent: dir * -100, duration: dur, ease: "power2.inOut" });
         gsap.to(slides[inIndex], {
           xPercent: 0,
           duration: dur,
@@ -108,7 +97,6 @@
           },
         });
       } else {
-        // CSS opacity fallback
         slides[outIndex].classList.remove("is-active");
       }
 
@@ -142,7 +130,7 @@
   });
 
   /* ------------------------------------------------------------------ *
-   * Fallback: no animation libs OR reduced motion -> just show content
+   * Fallback: no GSAP → show content immediately, hide preloader
    * ------------------------------------------------------------------ */
   const revealAllStatic = () => {
     document
@@ -151,7 +139,6 @@
         el.style.opacity = "1";
         el.style.transform = "none";
       });
-    // Still run counters so the numbers are correct, just without tweening.
     document.querySelectorAll("[data-count]").forEach((el) => {
       el.textContent = el.getAttribute("data-count");
     });
@@ -159,6 +146,8 @@
 
   if (prefersReduced || !hasGsap) {
     revealAllStatic();
+    const pl = document.getElementById("preloader");
+    if (pl) pl.style.display = "none";
     return;
   }
 
@@ -224,126 +213,166 @@
     });
   };
 
-  /* ------------------------------------------------------------------ *
-   * Hero intro timeline (runs on load)
-   * ------------------------------------------------------------------ */
+  /* CSS already hides [data-anim] elements; reinforce the state for GSAP */
   const hero = document.querySelector(".hero");
   gsap.set("[data-anim], [data-anim-title] .line", { opacity: 0 });
 
-  if (hero) {
-    const heroAnims = hero.querySelectorAll("[data-anim]");
+  /* ------------------------------------------------------------------ *
+   * Main animations — runs after preloader exits
+   * ------------------------------------------------------------------ */
+  function runMain() {
+    /* Hero intro timeline */
+    if (hero) {
+      const heroAnims = hero.querySelectorAll("[data-anim]");
 
-    // Build per-line masks for the hero title so each line slides up
-    // from behind a clipping edge.
-    const titleWrap = hero.querySelector("[data-anim-title]");
-    let heroLines = [];
-    if (titleWrap) {
-      titleWrap.querySelectorAll(".line").forEach((line) => {
-        const inner = document.createElement("span");
-        inner.className = "line-inner";
-        while (line.firstChild) inner.appendChild(line.firstChild);
-        line.appendChild(inner);
+      const titleWrap = hero.querySelector("[data-anim-title]");
+      let heroLines = [];
+      if (titleWrap) {
+        titleWrap.querySelectorAll(".line").forEach((line) => {
+          const inner = document.createElement("span");
+          inner.className = "line-inner";
+          while (line.firstChild) inner.appendChild(line.firstChild);
+          line.appendChild(inner);
+        });
+        heroLines = Array.from(titleWrap.querySelectorAll(".line-inner"));
+        gsap.set(heroLines, { yPercent: 110 });
+        gsap.set(titleWrap.querySelectorAll(".line"), { opacity: 1 });
+      }
+
+      const intro = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        delay: 0.1,
       });
-      heroLines = Array.from(titleWrap.querySelectorAll(".line-inner"));
-      gsap.set(heroLines, { yPercent: 110 });
-      gsap.set(titleWrap.querySelectorAll(".line"), { opacity: 1 });
-    }
 
-    const intro = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      delay: 0.15,
-    });
-
-    intro
-      .to(
-        heroLines,
-        { yPercent: 0, duration: 0.9, stagger: 0.1 }
-      )
-      .fromTo(
-        [".hero .lead", ".hero-actions"],
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
-        "-=0.45"
-      )
-      .fromTo(
-        ".hero-strip",
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          onStart: () => {
-            hero.querySelectorAll("[data-count]").forEach(animateCount);
-          },
-        },
-        "-=0.4"
-      );
-
-    // Mark hero anims handled so the scroll batch below ignores them.
-    heroAnims.forEach((el) => el.setAttribute("data-anim-done", ""));
-  }
-
-  /* ------------------------------------------------------------------ *
-   * Hero cursor-follow spotlight — highlights the grid background
-   * ------------------------------------------------------------------ */
-  if (hero) {
-    let cx = 50, cy = 50;
-    let tx = 50, ty = 50;
-
-    hero.addEventListener("mousemove", (e) => {
-      const rect = hero.getBoundingClientRect();
-      tx = ((e.clientX - rect.left) / rect.width) * 100;
-      ty = ((e.clientY - rect.top) / rect.height) * 100;
-    });
-
-    hero.addEventListener("mouseleave", () => {
-      tx = 50;
-      ty = 50;
-    });
-
-    gsap.ticker.add(() => {
-      cx += (tx - cx) * 0.06;
-      cy += (ty - cy) * 0.06;
-      hero.style.setProperty("--cursor-x", cx.toFixed(2) + "%");
-      hero.style.setProperty("--cursor-y", cy.toFixed(2) + "%");
-    });
-  }
-
-  /* ------------------------------------------------------------------ *
-   * Scroll-triggered reveals for the rest of the page
-   * ------------------------------------------------------------------ */
-  if (hasScrollTrigger) {
-    const targets = gsap.utils.toArray("[data-anim]:not([data-anim-done])");
-
-    ScrollTrigger.batch(targets, {
-      start: "top 88%",
-      once: true,
-      onEnter: (batch) => {
-        gsap.fromTo(
-          batch,
-          { opacity: 0, y: 32 },
+      intro
+        .to(heroLines, { yPercent: 0, duration: 0.9, stagger: 0.1 })
+        .fromTo(
+          [".hero .lead", ".hero-actions"],
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
+          "-=0.45"
+        )
+        .fromTo(
+          ".hero-strip",
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            stagger: 0.1,
-            overwrite: true,
-            onComplete: () => {
-              batch.forEach((el) => {
-                el.querySelectorAll("[data-count]").forEach(animateCount);
-              });
+            duration: 0.7,
+            onStart: () => {
+              hero.querySelectorAll("[data-count]").forEach(animateCount);
             },
-          }
+          },
+          "-=0.4"
         );
-      },
+
+      heroAnims.forEach((el) => el.setAttribute("data-anim-done", ""));
+    }
+
+    /* Hero cursor-follow spotlight on grid background */
+    if (hero) {
+      let cx = 50, cy = 50;
+      let tx = 50, ty = 50;
+
+      hero.addEventListener("mousemove", (e) => {
+        const rect = hero.getBoundingClientRect();
+        tx = ((e.clientX - rect.left) / rect.width) * 100;
+        ty = ((e.clientY - rect.top) / rect.height) * 100;
+      });
+
+      hero.addEventListener("mouseleave", () => {
+        tx = 50;
+        ty = 50;
+      });
+
+      gsap.ticker.add(() => {
+        cx += (tx - cx) * 0.06;
+        cy += (ty - cy) * 0.06;
+        hero.style.setProperty("--cursor-x", cx.toFixed(2) + "%");
+        hero.style.setProperty("--cursor-y", cy.toFixed(2) + "%");
+      });
+    }
+
+    /* Scroll-triggered reveals for the rest of the page */
+    if (hasScrollTrigger) {
+      const targets = gsap.utils.toArray("[data-anim]:not([data-anim-done])");
+
+      ScrollTrigger.batch(targets, {
+        start: "top 88%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 32 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              stagger: 0.1,
+              overwrite: true,
+              onComplete: () => {
+                batch.forEach((el) => {
+                  el.querySelectorAll("[data-count]").forEach(animateCount);
+                });
+              },
+            }
+          );
+        },
+      });
+
+      ScrollTrigger.refresh();
+    } else {
+      gsap.set("[data-anim]:not([data-anim-done])", { opacity: 1, y: 0 });
+      document.querySelectorAll("[data-count]").forEach(animateCount);
+    }
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Preloader — enter animation, wait for page load, then exit + runMain
+   * ------------------------------------------------------------------ */
+  const preloaderEl = document.getElementById("preloader");
+
+  if (preloaderEl) {
+    /* Mark text slides up into view */
+    gsap.fromTo(
+      ".preloader-mark",
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", delay: 0.25 }
+    );
+
+    /* Bar starts filling immediately — simulates loading progress */
+    gsap.to(".preloader-fill", {
+      scaleX: 0.82,
+      duration: 1.5,
+      ease: "power1.out",
+      delay: 0.5,
     });
 
-    // Recalculate once fonts/images settle.
-    window.addEventListener("load", () => ScrollTrigger.refresh());
+    const minWait = new Promise((r) => setTimeout(r, 1700));
+    const pageLoad = new Promise((r) => {
+      if (document.readyState === "complete") r();
+      else window.addEventListener("load", r, { once: true });
+    });
+
+    Promise.all([minWait, pageLoad]).then(() => {
+      gsap.timeline()
+        /* Complete the bar */
+        .to(".preloader-fill", { scaleX: 1, duration: 0.3, ease: "power2.in", overwrite: true })
+        /* Fade mark up and out */
+        .to(".preloader-mark", { opacity: 0, y: -28, duration: 0.35, ease: "power3.in" }, "-=0.1")
+        /* Slide the whole panel upward */
+        .to(preloaderEl, {
+          yPercent: -100,
+          duration: 0.8,
+          ease: "power3.inOut",
+          onComplete: () => {
+            preloaderEl.style.display = "none";
+            runMain();
+          },
+        });
+    });
   } else {
-    // ScrollTrigger missing: reveal everything that isn't the hero.
-    gsap.set("[data-anim]:not([data-anim-done])", { opacity: 1, y: 0 });
-    document.querySelectorAll("[data-count]").forEach(animateCount);
+    runMain();
   }
 })();
