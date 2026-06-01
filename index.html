@@ -3,226 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ALM Experimental Canada designs conveyor belt vulcanizing systems, Fusion repair materials, and global services for critical industries." />
-    <title>ALM Experimental Canada | Conveyor Belt Vulcanizing Systems</title>
+    <meta name="description" content="ALM Experimental Canada product catalog — vulcanizing press systems, fusion repair materials, and conveyor belt maintenance equipment." />
+    <title>Products | ALM Experimental Canada</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
 
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="catalog.css" />
 
-    <!-- Flag JS as available as early as possible to gate pre-hide styles -->
     <script>
       document.documentElement.classList.add("js");
     </script>
 
-    <!-- Animation libraries -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="catalog.js" defer></script>
   </head>
   <body>
-    <div class="preloader" id="preloader" aria-hidden="true" role="presentation">
-      <div class="preloader-inner">
-        <img class="preloader-mark" src="assets/logo.png" alt="ALM Experimental Canada" />
-        <div class="preloader-bar" aria-hidden="true">
-          <div class="preloader-fill"></div>
-        </div>
-      </div>
-    </div>
 
     <header class="navbar" data-nav>
       <div class="nav-inner">
-        <a class="logo" href="#top" aria-label="ALM Experimental Canada home">
+        <a class="logo" href="index.html" aria-label="ALM Experimental Canada home">
           <img src="assets/logo.png" alt="ALM Experimental Canada logo" />
         </a>
         <nav class="nav-links" aria-label="Primary">
-          <a href="#about">About</a>
+          <a href="index.html#about">About</a>
           <a href="#products">Products</a>
-          <a href="#services">Services</a>
-          <a href="#industries">Industries</a>
-          <a href="#values">Values</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#industries">Industries</a>
+          <a href="index.html#values">Values</a>
         </nav>
         <div class="nav-actions">
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
             Menu
           </button>
-          <a class="button primary" href="#contact">Request Consult</a>
+          <a class="button primary" href="index.html#contact">Request Consult</a>
         </div>
       </div>
       <div class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-        <a href="#about">About</a>
+        <a href="index.html#about">About</a>
         <a href="#products">Products</a>
-        <a href="#services">Services</a>
-        <a href="#industries">Industries</a>
-        <a href="#values">Values</a>
-        <a href="#contact">Contact</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#industries">Industries</a>
+        <a href="index.html#values">Values</a>
+        <a href="index.html#contact">Contact</a>
       </div>
     </header>
 
     <main>
-      <section class="hero" id="top">
-        <div class="hero-marquee" aria-hidden="true">
-          <div class="hero-marquee-track">
-            <span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span>
-            <span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span><span>ALM</span>
-          </div>
-        </div>
-        <div class="container hero-grid">
-          <div class="hero-content">
-            <h1 class="hero-title" data-anim-title>
-              <span class="line">Precision vulcanizing</span>
-              <span class="line">systems for the world's</span>
-              <span class="line">most demanding conveyors.</span>
-            </h1>
-            <p class="lead" data-anim>
-              Engineered presses, Fusion repair materials, and onsite support  keeping critical
-              belt lines running for over 60 years.
-            </p>
-            <div class="hero-actions" data-anim>
-              <a class="button primary" href="#products">Explore Products</a>
-              <a class="button secondary" href="#services">Global Services</a>
-            </div>
-          </div>
 
-          <div class="hero-strip" data-anim>
-            <div class="strip-metric">
-              <span class="metric-value"><span data-count="60">0</span>+</span>
-              <span class="metric-label">Years of engineering</span>
-            </div>
-            <div class="strip-metric">
-              <span class="metric-value"><span data-count="300">0</span>+</span>
-              <span class="metric-label">Trained specialists</span>
-            </div>
-            <div class="strip-metric">
-              <span class="metric-value">Worldwide</span>
-              <span class="metric-label">Field deployment</span>
-            </div>
-            <div class="strip-industries">
-              <span class="strip-industries-label">Industries</span>
-              <div class="strip-industries-items">
-                <span>Mining</span>
-                <span>Food</span>
-                <span>Aerospace</span>
-                <span>Aggregate</span>
-                <span>Ports &amp; Power</span>
-                <span>Package Handling</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- ====================================================
+           Fullpage Carousel
+           ==================================================== -->
+      <section class="fp-carousel" id="top" data-fp-carousel>
+        <div class="fp-track">
 
-        <a class="hero-scroll" href="#featured" aria-label="Scroll to content">
-          <span>Scroll</span>
-          <span class="hero-scroll-line" aria-hidden="true"></span>
-        </a>
-      </section>
-
-      <section class="carousel-section" id="featured">
-        <div class="container">
-          <header class="section-header" data-reveal>
-            <div class="kicker">
-              <span class="kicker-num">01</span>
-              <span class="eyebrow">Featured Systems</span>
-            </div>
-            <h2 data-anim>Built for uptime, engineered for precision.</h2>
-          </header>
-          <div class="carousel" data-carousel data-reveal data-anim>
-            <div class="carousel-track">
-              <article class="carousel-slide is-active" aria-hidden="false">
+          <article class="fp-slide is-active" data-theme="dark" aria-hidden="false">
+            <div class="fp-slide-bg" aria-hidden="true">01</div>
+            <div class="fp-slide-inner">
+              <div class="fp-slide-content">
+                <span class="fp-counter">01 / 04</span>
                 <p class="eyebrow">Vulcanizing Press Platforms</p>
-                <h3>Presses engineered for repeatable splicing.</h3>
-                <p>
-                  Modular heating and pressure control for conveyor belts in mining, bulk handling, and
-                  aerospace facilities. Designed for clean alignment and dependable cure cycles.
-                </p>
-                <div class="slide-meta">
+                <h2>Precision presses engineered for repeatable splicing.</h2>
+                <p>Modular heating and pressure control for conveyor belts in mining, bulk handling, and aerospace. Designed for clean alignment and dependable cure cycles.</p>
+                <div class="fp-slide-tags">
                   <span class="tag">Modular</span>
                   <span class="tag">Field proven</span>
+                  <span class="tag">Heavy duty</span>
                 </div>
-              </article>
-              <article class="carousel-slide" aria-hidden="true">
+              </div>
+            </div>
+          </article>
+
+          <article class="fp-slide" data-theme="brand" aria-hidden="true">
+            <div class="fp-slide-bg" aria-hidden="true">02</div>
+            <div class="fp-slide-inner">
+              <div class="fp-slide-content">
+                <span class="fp-counter">02 / 04</span>
                 <p class="eyebrow">Fusion Repair Materials</p>
-                <h3>Economical repairs that extend belt life.</h3>
-                <p>
-                  Precision Fusion materials reduce downtime and protect conveyor assets with rapid, durable
-                  repairs. Ideal for maintenance teams that cannot compromise throughput.
-                </p>
-                <div class="slide-meta">
+                <h2>Economical repairs that extend belt life.</h2>
+                <p>Precision Fusion compounds reduce downtime and protect conveyor assets with rapid, durable repairs. Built for maintenance teams that cannot compromise throughput.</p>
+                <div class="fp-slide-tags">
                   <span class="tag">Durable</span>
                   <span class="tag">Rapid cure</span>
+                  <span class="tag">Economical</span>
                 </div>
-              </article>
-              <article class="carousel-slide" aria-hidden="true">
-                <p class="eyebrow">Global Services and Academy</p>
-                <h3>Onsite expertise and modern training.</h3>
-                <p>
-                  Scaled staffing, installation, and splicing support backed by training programs that
-                  prepare new technicians and elevate seasoned crews.
-                </p>
-                <div class="slide-meta">
-                  <span class="tag">Onsite</span>
-                  <span class="tag">Certified</span>
-                </div>
-              </article>
-            </div>
-            <div class="carousel-controls" aria-label="Carousel controls">
-              <button class="button ghost" type="button" data-prev>Previous</button>
-              <div class="carousel-dots" role="tablist" aria-label="Carousel slides">
-                <button class="dot is-active" type="button" data-slide="0" aria-label="Slide 1"></button>
-                <button class="dot" type="button" data-slide="1" aria-label="Slide 2"></button>
-                <button class="dot" type="button" data-slide="2" aria-label="Slide 3"></button>
               </div>
-              <button class="button ghost" type="button" data-next>Next</button>
             </div>
+          </article>
+
+          <article class="fp-slide" data-theme="light" aria-hidden="true">
+            <div class="fp-slide-bg" aria-hidden="true">03</div>
+            <div class="fp-slide-inner">
+              <div class="fp-slide-content">
+                <span class="fp-counter">03 / 04</span>
+                <p class="eyebrow">Global Field Services</p>
+                <h2>Scalable field support, anywhere you operate.</h2>
+                <p>Experienced staffing for scaled assistance or complete all-inclusive engineering and installation solutions. Commission projects with ALM Experimental precision.</p>
+                <div class="fp-slide-tags">
+                  <span class="tag">Onsite</span>
+                  <span class="tag">Scalable</span>
+                  <span class="tag">Worldwide</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="fp-slide" data-theme="mid" aria-hidden="true">
+            <div class="fp-slide-bg" aria-hidden="true">04</div>
+            <div class="fp-slide-inner">
+              <div class="fp-slide-content">
+                <span class="fp-counter">04 / 04</span>
+                <p class="eyebrow">ALM Experimental Academy</p>
+                <h2>Training that closes the skill gap.</h2>
+                <p>Programs designed for new technicians and veterans who need the latest methods for precision splicing. Certification-focused, hands-on instruction backed by decades of field expertise.</p>
+                <div class="fp-slide-tags">
+                  <span class="tag">Certified</span>
+                  <span class="tag">Hands-on</span>
+                  <span class="tag">Continuous</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="fp-controls">
+          <button class="button ghost fp-btn" type="button" data-fp-prev>Previous</button>
+          <div class="fp-dots" role="tablist" aria-label="Carousel slides">
+            <button class="dot is-active" type="button" data-slide="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+            <button class="dot" type="button" data-slide="1" role="tab" aria-label="Slide 2" aria-selected="false"></button>
+            <button class="dot" type="button" data-slide="2" role="tab" aria-label="Slide 3" aria-selected="false"></button>
+            <button class="dot" type="button" data-slide="3" role="tab" aria-label="Slide 4" aria-selected="false"></button>
           </div>
+          <button class="button ghost fp-btn" type="button" data-fp-next>Next</button>
+        </div>
+
+        <a class="fp-scroll-hint" href="#products" aria-label="Scroll to products">
+          <span>Products</span>
+          <span class="hero-scroll-line" aria-hidden="true"></span>
+        </a>
+
+        <div class="fp-progress" aria-hidden="true">
+          <div class="fp-progress-fill" data-fp-progress></div>
         </div>
       </section>
 
-      <section class="about" id="about">
-        <div class="container about-grid" data-reveal>
-          <div class="about-intro">
-            <div class="kicker">
-              <span class="kicker-num">02</span>
-              <span class="eyebrow">About ALM Experimental</span>
-            </div>
-            <h2 data-anim>Six decades of quality, engineering, and integrity.</h2>
-            <p class="lead" data-anim>
-              ALM Experimental Canada is a leading manufacturer of conveyor belt vulcanizing equipment with a complete
-              family of brands that support setup, monitoring, and maintenance.
-            </p>
-            <p data-anim>
-              We maintain a profound commitment to excellence, integrity, and social responsibility 
-              contributing to local causes and upholding stringent environmental standards across every
-              region we support.
-            </p>
-          </div>
-          <div class="about-list">
-            <div class="about-card" data-anim>
-              <span class="about-title">Engineering Depth</span>
-              <p>Precision presses, tooling, and monitoring systems engineered for heavy duty cycles.</p>
-            </div>
-            <div class="about-card" data-anim>
-              <span class="about-title">Global Services</span>
-              <p>Experienced crews available for scaled assistance or complete installation solutions.</p>
-            </div>
-            <div class="about-card" data-anim>
-              <span class="about-title">ALM Experimental Academy</span>
-              <p>Training programs that bridge new technicians and keep veterans updated on new methods.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <!-- ====================================================
+           Products  (9 cards · 3 per row)
+           ==================================================== -->
       <section class="products" id="products">
         <div class="container">
           <header class="section-header" data-reveal>
             <div class="kicker">
-              <span class="kicker-num">03</span>
+              <span class="kicker-num">01</span>
               <span class="eyebrow">Products</span>
             </div>
             <h2 data-anim>Conveyor solutions for every stage of belt life.</h2>
           </header>
+
           <div class="card-grid" data-reveal>
+
+            <!-- Row 1 -->
             <article class="card" data-anim>
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -233,6 +175,7 @@
               <h4>Vulcanizing Press Systems</h4>
               <p>Precision press platforms designed for repeatable cure cycles and clean belt alignment.</p>
             </article>
+
             <article class="card" data-anim>
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -243,6 +186,7 @@
               <h4>Fusion Repair Materials</h4>
               <p>Economical repair kits that extend belt life with durable, rapid cure compounds.</p>
             </article>
+
             <article class="card" data-anim>
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -253,6 +197,8 @@
               <h4>Splicing Tooling</h4>
               <p>Alignment, clamping, and preparation tools that protect accuracy at every splice.</p>
             </article>
+
+            <!-- Row 2 -->
             <article class="card" data-anim>
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -261,8 +207,9 @@
                 </svg>
               </div>
               <h4>Monitoring and Controls</h4>
-              <p>Control systems that track temperature, pressure, and cycle performance.</p>
+              <p>Control systems that track temperature, pressure, and cycle performance in real time.</p>
             </article>
+
             <article class="card" data-anim>
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -273,6 +220,7 @@
               <h4>Belt Handling Equipment</h4>
               <p>Systems that make belt handling safer and more efficient for maintenance crews.</p>
             </article>
+
             <article class="card" data-anim>
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -283,132 +231,46 @@
               <h4>Installation Accessories</h4>
               <p>Complementary components that ensure reliable installations and long term performance.</p>
             </article>
-          </div>
-        </div>
-      </section>
 
-      <section class="services" id="services">
-        <div class="container services-grid" data-reveal>
-          <div class="service-block">
-            <div class="kicker">
-              <span class="kicker-num">04</span>
-              <span class="eyebrow">Global Services</span>
-            </div>
-            <h2 data-anim>Scalable field support, anywhere you operate.</h2>
-            <p class="lead" data-anim>
-              ALM Experimental Global Services provides experienced staffing onsite for scaled assistance or complete
-              all-inclusive engineering and installation solutions.
-            </p>
-            <ul class="inline-list" data-anim>
-              <li>Onsite splicing and belt installation.</li>
-              <li>Project planning and commissioning support.</li>
-              <li>Maintenance schedules and system audits.</li>
-            </ul>
-          </div>
-          <div class="service-block">
-            <div class="kicker">
-              <span class="kicker-num">05</span>
-              <span class="eyebrow">ALM Experimental Academy</span>
-            </div>
-            <h2 data-anim>Training that closes the skill gap.</h2>
-            <p class="lead" data-anim>
-              Programs are geared toward new technicians and veterans who need the latest methods and
-              technologies for precision splicing.
-            </p>
-            <ul class="inline-list" data-anim>
-              <li>Certification focused on safety and performance.</li>
-              <li>Hands on instruction with modern press systems.</li>
-              <li>Continuous updates aligned to field innovation.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="industries" id="industries">
-        <div class="container">
-          <header class="section-header" data-reveal>
-            <div class="kicker">
-              <span class="kicker-num">06</span>
-              <span class="eyebrow">Industries Served</span>
-            </div>
-            <h2 data-anim>Trusted across critical industries worldwide.</h2>
-          </header>
-          <div class="industry-grid" data-reveal>
-            <div class="industry-item" data-anim><span class="industry-num">01</span>Mining and bulk material handling</div>
-            <div class="industry-item" data-anim><span class="industry-num">02</span>Food and package handling</div>
-            <div class="industry-item" data-anim><span class="industry-num">03</span>Aggregate ports and power</div>
-            <div class="industry-item" data-anim><span class="industry-num">04</span>Carpet and furniture manufacturing</div>
-            <div class="industry-item" data-anim><span class="industry-num">05</span>Aerospace component lines</div>
-            <div class="industry-item" data-anim><span class="industry-num">06</span>Ports, terminals, and logistics</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="values" id="values">
-        <div class="container values-grid" data-reveal>
-          <div class="values-intro">
-            <div class="kicker">
-              <span class="kicker-num">07</span>
-              <span class="eyebrow">Mission Statement</span>
-            </div>
-            <h2 data-anim>Superior products, trusted partnerships.</h2>
-            <p class="lead" data-anim>
-              Our mission is to provide superior products that meet or exceed customer expectations, to
-              create opportunities for employees and partners to reach their full ability, and to promote
-              trust and integrity in every transaction.
-            </p>
-          </div>
-          <div class="values-panel" data-anim>
-            <div>
-              <p class="eyebrow">ALM Experimental Values</p>
-              <h3>Safety, respect, and uncompromising quality.</h3>
-              <p>
-                ALM Experimental places safety at the pinnacle of importance with an incredible record of no major
-                injury or fatality for over 60 years. Our training and reinforcement programs ensure that
-                teams stay safe and prepared.
-              </p>
-            </div>
-            <div class="values-list">
-              <div>
-                <span class="metric-value">60 Years</span>
-                <span class="metric-label">No major injury record</span>
+            <!-- Row 3 -->
+            <article class="card" data-anim>
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 8h18v10H3z"></path>
+                  <path d="M7 8V5h10v3"></path>
+                  <path d="M5 18v3h14v-3"></path>
+                </svg>
               </div>
-              <div>
-                <span class="metric-value">Integrity</span>
-                <span class="metric-label">Trust with customers and partners</span>
+              <h4>Curing Blankets</h4>
+              <p>Thermal management blankets engineered for consistent heat distribution across the splice zone.</p>
+            </article>
+
+            <article class="card" data-anim>
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="8"></circle>
+                  <path d="M12 8v4l3 2"></path>
+                </svg>
               </div>
-              <div>
-                <span class="metric-value">Innovation</span>
-                <span class="metric-label">Industry leading durability</span>
+              <h4>Belt Tension Meters</h4>
+              <p>Precision instruments that measure and verify belt tension to prevent premature wear and failure.</p>
+            </article>
+
+            <article class="card" data-anim>
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 3h14v18H5z"></path>
+                  <path d="M9 7h6M9 11h6M9 15h4"></path>
+                </svg>
               </div>
-            </div>
+              <h4>Maintenance Kits</h4>
+              <p>Field-ready kits with essential tools and materials for emergency and scheduled belt maintenance.</p>
+            </article>
+
           </div>
         </div>
       </section>
 
-      <section class="cta" id="contact">
-        <div class="container cta-grid" data-reveal>
-          <div class="cta-intro">
-            <div class="kicker">
-              <span class="kicker-num">08</span>
-              <span class="eyebrow">Start a Project</span>
-            </div>
-            <h2 data-anim>Align your conveyor systems with ALM Experimental precision.</h2>
-            <p class="lead" data-anim>
-              Talk with our engineers about the right press platform, repair materials, and onsite support
-              for your facilities.
-            </p>
-          </div>
-          <div class="cta-panel" data-anim>
-            <div>
-              <span class="eyebrow">Contact</span>
-              <p class="cta-line">service@almexcanada.com</p>
-              <p class="cta-line">+1 (000) 555-0123</p>
-            </div>
-            <a class="button primary" href="mailto:service@almexcanada.com">Request Consultation</a>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer class="footer">
@@ -421,11 +283,11 @@
           </p>
         </div>
         <div class="footer-links">
-          <a href="#about">About</a>
+          <a href="index.html#about">About</a>
           <a href="#products">Products</a>
-          <a href="#services">Services</a>
-          <a href="#industries">Industries</a>
-          <a href="#contact">Contact</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#industries">Industries</a>
+          <a href="index.html#contact">Contact</a>
         </div>
         <div class="footer-meta">
           <p>ALM Experimental Canada</p>
@@ -434,5 +296,6 @@
         </div>
       </div>
     </footer>
+
   </body>
 </html>

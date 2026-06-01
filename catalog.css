@@ -1,0 +1,352 @@
+/* ============================================================
+   catalog.css — fullpage carousel styles for products.html
+   ============================================================ */
+
+/* ---- Section override: remove the standard section padding ---- */
+.fp-carousel {
+  position: relative;
+  height: 100svh;
+  min-height: 540px;
+  overflow: hidden;
+  padding: 0;
+  scroll-margin-top: 0;
+}
+
+/* ---- Track ---- */
+.fp-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Slides ---- */
+.fp-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding-top: var(--navbar-height);
+  overflow: hidden;
+  /* CSS fallback: only active slide visible */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--duration-enter) var(--ease-enter),
+              visibility var(--duration-enter) var(--ease-enter);
+}
+
+.fp-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Grid overlay shared by all slides */
+.fp-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 120px 120px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Slide themes ---- */
+.fp-slide[data-theme="dark"] {
+  background: var(--color-brand-darker);
+}
+.fp-slide[data-theme="dark"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0 0H120M0 60H120M0 120H120M0 0V120M60 0V120M120 0V120' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+}
+
+.fp-slide[data-theme="brand"] {
+  background: var(--color-brand);
+}
+.fp-slide[data-theme="brand"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0 0H120M0 60H120M0 120H120M0 0V120M60 0V120M120 0V120' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+
+.fp-slide[data-theme="light"] {
+  background: var(--color-brand-mist);
+}
+.fp-slide[data-theme="light"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0 0H120M0 60H120M0 120H120M0 0V120M60 0V120M120 0V120' stroke='%23506472' stroke-width='1'/%3E%3C/svg%3E");
+  opacity: 0.07;
+}
+
+.fp-slide[data-theme="mid"] {
+  background: var(--color-brand-dark);
+}
+.fp-slide[data-theme="mid"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0 0H120M0 60H120M0 120H120M0 0V120M60 0V120M120 0V120' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+}
+
+/* ---- Decorative background number ---- */
+.fp-slide-bg {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.2em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(14rem, 30vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  color: rgba(255, 255, 255, 0.04);
+}
+
+.fp-slide[data-theme="brand"] .fp-slide-bg {
+  color: rgba(255, 255, 255, 0.08);
+}
+
+.fp-slide[data-theme="light"] .fp-slide-bg {
+  color: rgba(80, 100, 114, 0.07);
+}
+
+/* ---- Slide content layout ---- */
+.fp-slide-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+
+.fp-slide-content {
+  max-width: 640px;
+}
+
+/* ---- Slide typography ---- */
+.fp-counter {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  margin-bottom: var(--space-5);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.fp-slide[data-theme="light"] .fp-counter {
+  color: var(--color-steel);
+}
+
+/* Eyebrow color on dark slides */
+.fp-slide[data-theme="dark"] .eyebrow,
+.fp-slide[data-theme="brand"] .eyebrow,
+.fp-slide[data-theme="mid"] .eyebrow {
+  color: var(--color-brand-pale);
+}
+
+/* H2 on all slides */
+.fp-slide h2 {
+  font-size: clamp(2rem, 1rem + 3.5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-5);
+  max-width: 20ch;
+}
+
+.fp-slide[data-theme="dark"] h2,
+.fp-slide[data-theme="brand"] h2,
+.fp-slide[data-theme="mid"] h2 {
+  color: var(--color-white);
+}
+
+/* Description paragraph */
+.fp-slide p:not(.eyebrow) {
+  font-size: var(--text-body-lg);
+  max-width: 52ch;
+  margin-bottom: var(--space-6);
+  line-height: 1.65;
+}
+
+.fp-slide[data-theme="dark"] p:not(.eyebrow),
+.fp-slide[data-theme="brand"] p:not(.eyebrow),
+.fp-slide[data-theme="mid"] p:not(.eyebrow) {
+  color: var(--color-cloud);
+}
+
+/* ---- Tags ---- */
+.fp-slide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.fp-slide[data-theme="dark"] .tag,
+.fp-slide[data-theme="brand"] .tag,
+.fp-slide[data-theme="mid"] .tag {
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ---- Controls (bottom-left) ---- */
+.fp-controls {
+  position: absolute;
+  bottom: var(--space-8);
+  left: clamp(20px, 5vw, 64px);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.fp-btn {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.75);
+  height: 40px;
+  padding: 0 var(--space-5);
+}
+
+.fp-btn:hover {
+  border-color: rgba(255, 255, 255, 0.65);
+  color: var(--color-white);
+  background: transparent;
+}
+
+.fp-dots {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.fp-carousel .dot {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: transparent;
+}
+
+.fp-carousel .dot.is-active {
+  background: var(--color-white);
+  border-color: var(--color-white);
+}
+
+/* Light-theme overrides — toggled by JS via data-light-theme attribute */
+.fp-carousel[data-light-theme] .fp-btn {
+  border-color: rgba(80, 100, 114, 0.3);
+  color: var(--color-charcoal);
+}
+
+.fp-carousel[data-light-theme] .fp-btn:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+  background: transparent;
+}
+
+.fp-carousel[data-light-theme] .dot {
+  border-color: rgba(80, 100, 114, 0.3);
+}
+
+.fp-carousel[data-light-theme] .dot.is-active {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+}
+
+.fp-carousel[data-light-theme] .fp-scroll-hint {
+  color: var(--color-steel);
+}
+
+.fp-carousel[data-light-theme] .fp-scroll-hint .hero-scroll-line {
+  background: var(--color-brand-pale);
+}
+
+.fp-carousel[data-light-theme] .fp-progress {
+  background: rgba(80, 100, 114, 0.1);
+}
+
+.fp-carousel[data-light-theme] .fp-progress-fill {
+  background: var(--color-brand);
+}
+
+/* ---- Scroll hint (bottom-right) ---- */
+.fp-scroll-hint {
+  position: absolute;
+  bottom: var(--space-8);
+  right: clamp(20px, 5vw, 64px);
+  z-index: 20;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---- Progress bar ---- */
+.fp-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 20;
+}
+
+.fp-progress-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--color-brand-light);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 820px) {
+  .fp-slide h2 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+
+  .fp-controls {
+    bottom: var(--space-6);
+  }
+
+  .fp-scroll-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .fp-slide h2 {
+    font-size: clamp(1.6rem, 5.5vw, 2rem);
+  }
+
+  .fp-slide-bg {
+    font-size: clamp(8rem, 45vw, 12rem);
+    right: -0.1em;
+    bottom: -0.1em;
+  }
+
+  .fp-btn {
+    padding: 0 var(--space-4);
+    font-size: 0.62rem;
+  }
+
+  .fp-controls {
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 821px) and (max-height: 680px) {
+  .fp-slide h2 {
+    font-size: clamp(1.6rem, 2.5vw, 2.75rem);
+  }
+
+  .fp-controls {
+    bottom: var(--space-5);
+  }
+
+  .fp-scroll-hint {
+    bottom: var(--space-5);
+  }
+}
